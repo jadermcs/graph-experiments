@@ -1,7 +1,4 @@
-FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
-
-RUN rm /etc/apt/sources.list.d/cuda.list
-RUN rm /etc/apt/sources.list.d/nvidia-ml.list
+FROM nvidia/cuda:11.7.0-cudnn8-devel-ubuntu22.04
 
 RUN apt update && \
     apt install -y bash \
@@ -13,20 +10,15 @@ RUN apt update && \
                    python3-pip && \
     rm -rf /var/lib/apt/lists
 
-RUN python3 -m pip install --no-cache-dir --upgrade pip && \
-    python3 -m pip install --no-cache-dir \
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install \
     jupyter \
     tensorflow \
     torch
 
-RUN git clone https://github.com/NVIDIA/apex
-RUN cd apex && \
-    python3 setup.py install && \
-    pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
-
 WORKDIR /workspace
-COPY . transformers/
-RUN cd transformers/ && \
-    python3 -m pip install --no-cache-dir -r requirements.txt
+COPY . graphs/
+RUN cd graphs/ && \
+    python3 -m pip install -r requirements.txt
 
 CMD ["/bin/bash"]
