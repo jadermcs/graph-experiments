@@ -17,8 +17,9 @@ RUN python3 -m pip install --upgrade pip && \
     torch
 
 WORKDIR /workspace
-COPY . graphs/
-RUN cd graphs/ && \
+
+RUN git clone https://github.com/jadermcs/graph-experiments
+RUN cd graph-experiments && \
     python3 -m pip install -r requirements.txt
 
 CMD ["/bin/bash"]
