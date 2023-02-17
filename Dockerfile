@@ -12,7 +12,6 @@ RUN apt update && \
 
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install \
-    jupyter \
     tensorflow \
     torch
 
@@ -22,4 +21,4 @@ RUN git clone https://github.com/jadermcs/graph-experiments
 RUN cd graph-experiments && \
     python3 -m pip install -r requirements.txt
 
-CMD ["/bin/bash"]
+CMD ["/bin/bash run.sh"]
