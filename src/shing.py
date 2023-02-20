@@ -1,4 +1,5 @@
 import time
+import pickle
 import logging
 import argparse
 import pandas as pd
@@ -54,18 +55,13 @@ def main(raw_args=None):
     with open(args.testset, 'r', encoding='utf-8') as f_in:
             targets = [line.strip() for line in f_in]
 
-    # Iterate over sentences and words
-    shing, corpusSize = shingles(sentences, targets, args.k, args.w)
+    shing, hashSet = shingles(sentences, targets, args.k, args.w)
 
-    # Write frequency scores
-    df = pd.DataFrame(shing).T
-    df.index.name = "target"
-    df[df.isna()] = 0
-    if args.norm:
-        df /= corpusSize
-    df.to_csv(args.outPath)
+    out = {"shingles": shing, "hashes": hashSet}
+    with open(args.outPath, "wb") as handle:
+        pickle.dump(out, handle)
 
-    logging.info('tokens: %d' % (corpusSize))
+    logging.info('shingles: %d' % (len(hashSet)))
     logging.info('types: %d' % (len(shing.keys())))
     logging.info("--- %s seconds ---" % (time.time() - start_time))
 

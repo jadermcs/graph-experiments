@@ -6,7 +6,7 @@ class Space(object):
     """
     Load and save Space objects.
     """
-        
+
     def __init__(self, path=None, matrix=csr_matrix([]), rows=[], columns=[]):
         """
         Can be either initialized (i) by providing a path, (ii) by providing a matrix, rows and columns, or (iii) by providing neither, then an empty instance is created
@@ -14,7 +14,7 @@ class Space(object):
         `rows` list with row names
         `columns` list with column names
         """
-        
+
         if path!=None:
             # Load matrix
             matrix = load_npz(path)
@@ -36,16 +36,16 @@ class Space(object):
         self.row2id = row2id
         self.id2row = id2row
         self.column2id = column2id
-        self.id2column = id2column      
-        
+        self.id2column = id2column
+
     def save(self, path):
         """
         `path` saves matrix at path in in npz format, saves rows and columns as pickled lists in same folder at '[path]_rows' and '[path]_columns'
         """
-        
+
         # Save matrix
         with open(path, 'wb') as f:
-            save_npz(f, self.matrix)    
+            save_npz(f, self.matrix)
         # Save rows
         with open(path + '_rows', 'wb') as f:
             pickle.dump(self.rows, f)

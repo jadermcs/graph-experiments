@@ -100,7 +100,7 @@ for method in os.listdir(methods):
     spearmans['all'] = average_spearman
 
     # Write output scores
-    with open(os.path.join(input_dir, 'scores.txt'), 'w') as output_file:
+    with open(os.path.join(input_dir, 'scores.txt'), 'a') as output_file:
         output_file.write("{}\n".format(method))
         # Task 1
         for language in accuracies:
