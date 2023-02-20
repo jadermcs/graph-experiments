@@ -48,7 +48,7 @@ def main(raw_args=None):
     # Get sentence iterator
     sentences = []
     for sentence in PathLineSentences(args.corpDir):
-        sentences += [w.lower() for w in sentence]
+        sentences += sentence
 
     # Load targets
     with open(args.testset, 'r', encoding='utf-8') as f_in:

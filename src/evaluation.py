@@ -31,6 +31,7 @@ for method in os.listdir(methods):
             message = "Error: Expected submission file '{0}', found files {1}"
             sys.exit(message.format(submission_file_name, os.listdir(submission_dir)))
         with codecs.open(submission_path, 'r', 'utf-8') as submission_file:
+            # for l in submission_file:
             submission = {line.strip().split('\t')[0]:int(line.strip().split('\t')[1]) for line in submission_file}
 
         # Load truth file
@@ -99,7 +100,7 @@ for method in os.listdir(methods):
     spearmans['all'] = average_spearman
 
     # Write output scores
-    with open(os.path.join(input_dir, 'scores.txt'), 'a') as output_file:
+    with open(os.path.join(input_dir, 'scores.txt'), 'w') as output_file:
         output_file.write("{}\n".format(method))
         # Task 1
         for language in accuracies:
