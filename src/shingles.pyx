@@ -1,6 +1,9 @@
+import pyximport
+pyximport.install(language_level=3)
+import cythonfn
 from hashlib import blake2s
 
-def shingles(list sentences, list targets, int k=3, int w=6):
+def shingles(list sentences, list targets, int k=3, int w=3):
     """TODO: Docstring for singles.
 
     :sentence: TODO
@@ -20,7 +23,7 @@ def shingles(list sentences, list targets, int k=3, int w=6):
                 for j in range(len(sentence)-i+1):
                     string = " ".join(sentence[j:j+i])
                     # compute deterministic hash
-                    string = blake2s(string.encode(), digest_size=3).hexdigest()
+                    string = blake2s(string.encode(), digest_size=2).hexdigest()
                     if string in shingles[word]:
                         shingles[word][string] += 1
                     else:
